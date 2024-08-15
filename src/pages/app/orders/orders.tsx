@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet-async'
 
+import { Pagination } from '@/components/pagination'
 import {
   Table,
   TableBody,
@@ -7,8 +8,9 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { OrderTableRow } from './order-table-row'
+
 import { OrderTableFilters } from './order-table-filters'
+import { OrderTableRow } from './order-table-row'
 
 export function Orders() {
   return (
@@ -33,15 +35,14 @@ export function Orders() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {Array.from({length:10}).map(() => {
-                  return(
-                    <OrderTableRow key={1}/>
-                  )
+                {Array.from({ length: 10 }).map(() => {
+                  return <OrderTableRow key={1} />
                 })}
-                
               </TableBody>
             </Table>
           </div>
+
+          <Pagination pageIndex={0} totalCount={100} perPage={10} />
         </div>
       </div>
     </>
