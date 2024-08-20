@@ -1,5 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { DollarSign } from "lucide-react";
+import { DollarSign } from 'lucide-react'
+
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 export function MonthRevenueCard() {
   return (
@@ -18,5 +19,5 @@ export function MonthRevenueCard() {
         </p>
       </CardContent>
     </Card>
-  );
+  )
 }

@@ -1,11 +1,14 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { DollarSign } from "lucide-react";
+import { DollarSign } from 'lucide-react'
+
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 export function MonthCanceledOrdersAmountCard() {
   return (
     <Card>
       <CardHeader className="flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-base font-semibold">Cancelamentos (mês)</CardTitle>
+        <CardTitle className="text-base font-semibold">
+          Cancelamentos (mês)
+        </CardTitle>
         <DollarSign className="h-4 w-4 text-muted-foreground" />
       </CardHeader>
       <CardContent className="space-y-1">
@@ -16,5 +19,5 @@ export function MonthCanceledOrdersAmountCard() {
         </p>
       </CardContent>
     </Card>
-  );
+  )
 }

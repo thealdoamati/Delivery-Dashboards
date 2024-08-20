@@ -1,3 +1,4 @@
+import { BarChart } from 'lucide-react'
 import {
   CartesianGrid,
   Line,
@@ -18,22 +19,23 @@ import {
 } from '@/components/ui/card'
 
 const data = [
-  { date: '10/12', revenue: 12000 },
-  { date: '11/12', revenue: 700 },
-  { date: '12/12', revenue: 123 },
-  { date: '13/12', revenue: 334 },
+  { product: 'Mussarela', amount: 40 },
+  { product: 'Margerita', amount: 30 },
+  { product: 'Pepperoni', amount: 12 },
+  { product: 'Portuguesa', amount: 5 },
+  { product: 'Catupiry', amount: 15 },
 ]
 
-export function RevenueChart() {
+export function PopularProductsChart() {
   return (
     <>
-      <Card className="col-span-6">
-        <CardHeader className="flex-row items-center justify-between pb-8">
-          <div className="space-y-1">
+      <Card className="col-span-3">
+        <CardHeader className="pb-8">
+          <div className="flex items-center justify-between">
             <CardTitle className="text-base font-medium">
-              Receita no período
+              Produtos populares
             </CardTitle>
-            <CardDescription>Receita diária no período</CardDescription>
+            <BarChart className="h-4 w-4 text-muted-foreground" />
           </div>
         </CardHeader>
         <CardContent>
