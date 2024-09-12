@@ -5,9 +5,9 @@ export interface GetOrderDetailsParams {
 }
 
 export interface GetOrderDetailsResponse {
-  status: 'pending' | 'canceled' | 'processing' | 'delivering' | 'delivered'
   id: string
   createdAt: string
+  status: 'pending' | 'canceled' | 'processing' | 'delivering' | 'delivered'
   totalInCents: number
   customer: {
     name: string
@@ -18,9 +18,14 @@ export interface GetOrderDetailsResponse {
     id: string
     priceInCents: number
     quantity: number
-  }
+    product: {
+      name: string
+    }
+  }[]
 }
 
 export async function getOrderDetails({ orderId }: GetOrderDetailsParams) {
-  const response = await api.get<GetOrderDetailsResponse>(`orders/${orderId}`)
+  const response = await api.get<GetOrderDetailsResponse>(`/orders/${orderId}`)
+
+  return response.data
 }
