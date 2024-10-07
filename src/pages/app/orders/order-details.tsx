@@ -20,7 +20,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-import { OrderDetailsSketeleton } from './order-details-skeleton'
+import { OrderDetailsSkeleton } from './order-details-skeleton'
 
 export interface OrderDetailsProps {
   orderId: string
@@ -131,7 +131,7 @@ export function OrderDetails({ orderId, open }: OrderDetailsProps) {
           </Table>
         </div>
       ) : (
-        <OrderDetailsSketeleton />
+        <OrderDetailsSkeleton />
       )}
     </DialogContent>
   )

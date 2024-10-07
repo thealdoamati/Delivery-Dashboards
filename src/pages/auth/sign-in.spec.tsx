@@ -7,7 +7,7 @@ import { queryClient } from '@/lib/react-query'
 
 import { SignIn } from './sign-in'
 
-describe('NavLink', () => {
+describe('SignIn', () => {
   it('should set default email input value if email is present on search params', () => {
     const wrapper = render(<SignIn />, {
       wrapper: ({ children }) => {
@@ -26,8 +26,6 @@ describe('NavLink', () => {
     })
 
     const emailInput = wrapper.getByLabelText('Seu e-mail') as HTMLInputElement
-
-    console.log(emailInput.outerHTML)
 
     expect(emailInput.value).toEqual('johndoe@example.com')
   })

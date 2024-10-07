@@ -1,4 +1,3 @@
-import { DialogTrigger } from '@radix-ui/react-dialog'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { Building, ChevronDown, LogOut } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
@@ -7,9 +6,9 @@ import { getManagedRestaurant } from '@/api/get-managed-restaurant'
 import { getProfile } from '@/api/get-profile'
 import { signOut } from '@/api/sign-out'
 
-import { StorieProfileDialog } from './store-profile-dialog'
+import { StoreProfileDialog } from './store-profile-dialog'
 import { Button } from './ui/button'
-import { Dialog } from './ui/dialog'
+import { Dialog, DialogTrigger } from './ui/dialog'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,6 +25,7 @@ export function AccountMenu() {
   const { data: profile, isLoading: isLoadingProfile } = useQuery({
     queryKey: ['profile'],
     queryFn: getProfile,
+    staleTime: Infinity,
   })
 
   const { data: managedRestaurant, isLoading: isLoadingManagedRestaurant } =
@@ -38,9 +38,10 @@ export function AccountMenu() {
   const { mutateAsync: signOutFn, isPending: isSigningOut } = useMutation({
     mutationFn: signOut,
     onSuccess: () => {
-      navigate('sign-in', { replace: true })
+      navigate('/sign-in', { replace: true })
     },
   })
+
   return (
     <Dialog>
       <DropdownMenu>
@@ -54,9 +55,10 @@ export function AccountMenu() {
             ) : (
               managedRestaurant?.name
             )}
-            <ChevronDown />
+            <ChevronDown className="h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
+
         <DropdownMenuContent align="end" className="w-56">
           <DropdownMenuLabel className="flex flex-col">
             {isLoadingProfile ? (
@@ -85,12 +87,7 @@ export function AccountMenu() {
             disabled={isSigningOut}
             className="text-rose-500 dark:text-rose-400"
           >
-            <button
-              className="w-full"
-              onClick={() => {
-                signOutFn()
-              }}
-            >
+            <button className="w-full" onClick={() => signOutFn()}>
               <LogOut className="mr-2 h-4 w-4" />
               <span>Sair</span>
             </button>
@@ -98,7 +95,7 @@ export function AccountMenu() {
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <StorieProfileDialog />
+      <StoreProfileDialog />
     </Dialog>
   )
 }

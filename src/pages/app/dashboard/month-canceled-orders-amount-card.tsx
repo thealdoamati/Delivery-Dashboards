@@ -8,8 +8,8 @@ import { MetricCardSkeleton } from './metric-card-skeleton'
 
 export function MonthCanceledOrdersAmountCard() {
   const { data: monthCanceledOrdersAmount } = useQuery({
-    queryFn: getMonthCanceledOrdersAmount,
     queryKey: ['metrics', 'month-canceled-orders-amount'],
+    queryFn: getMonthCanceledOrdersAmount,
   })
 
   return (
@@ -26,7 +26,7 @@ export function MonthCanceledOrdersAmountCard() {
             <span className="text-2xl font-bold tracking-tight">
               {monthCanceledOrdersAmount.amount.toLocaleString('pt-BR')}
             </span>
-            <p className="text-sx text-muted-foreground">
+            <p className="text-xs text-muted-foreground">
               {monthCanceledOrdersAmount.diffFromLastMonth < 0 ? (
                 <>
                   <span className="text-emerald-500 dark:text-emerald-400">

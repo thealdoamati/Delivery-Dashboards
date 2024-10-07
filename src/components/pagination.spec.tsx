@@ -6,7 +6,6 @@ import { Pagination } from './pagination'
 const onPageChangeCallback = vi.fn()
 
 describe('Pagination', () => {
-  // Resetando a spy após cada teste
   beforeEach(() => {
     onPageChangeCallback.mockClear()
   })
@@ -17,7 +16,7 @@ describe('Pagination', () => {
         pageIndex={0}
         totalCount={200}
         perPage={10}
-        onPageChange={() => {}}
+        onPageChange={onPageChangeCallback}
       />,
     )
 

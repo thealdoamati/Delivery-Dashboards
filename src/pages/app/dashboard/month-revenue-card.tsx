@@ -8,8 +8,8 @@ import { MetricCardSkeleton } from './metric-card-skeleton'
 
 export function MonthRevenueCard() {
   const { data: monthRevenue } = useQuery({
-    queryFn: getMonthRevenue,
     queryKey: ['metrics', 'month-revenue'],
+    queryFn: getMonthRevenue,
   })
 
   return (
@@ -29,20 +29,20 @@ export function MonthRevenueCard() {
                 currency: 'BRL',
               })}
             </span>
-            <p className="text-sx text-muted-foreground">
+            <p className="text-xs text-muted-foreground">
               {monthRevenue.diffFromLastMonth >= 0 ? (
                 <>
                   <span className="text-emerald-500 dark:text-emerald-400">
                     +{monthRevenue.diffFromLastMonth}%
                   </span>{' '}
-                  em relação a ontem
+                  em relação ao mês passado
                 </>
               ) : (
                 <>
                   <span className="text-rose-500 dark:text-rose-400">
                     {monthRevenue.diffFromLastMonth}%
                   </span>{' '}
-                  em relação a ontem
+                  em relação ao mês passado
                 </>
               )}
             </p>

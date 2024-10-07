@@ -18,7 +18,7 @@ import { OrderTableRow } from './order-table-row'
 import { OrderTableSkeleton } from './order-table-skeleton'
 
 export function Orders() {
-  const [searchParams, setSeatchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
 
   const orderId = searchParams.get('orderId')
   const customerName = searchParams.get('customerName')
@@ -41,7 +41,7 @@ export function Orders() {
   })
 
   function handlePaginate(pageIndex: number) {
-    setSeatchParams((state) => {
+    setSearchParams((state) => {
       state.set('page', (pageIndex + 1).toString())
 
       return state
@@ -51,10 +51,12 @@ export function Orders() {
   return (
     <>
       <Helmet title="Pedidos" />
+
       <div className="flex flex-col gap-4">
         <h1 className="text-3xl font-bold tracking-tight">Pedidos</h1>
         <div className="space-y-2.5">
           <OrderTableFilters />
+
           <div className="rounded-md border">
             <Table>
               <TableHeader>
@@ -70,7 +72,6 @@ export function Orders() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {isLoadingOrders && <OrderTableSkeleton />}
                 {result &&
                   result.orders.map((order) => {
                     return <OrderTableRow key={order.orderId} order={order} />
@@ -78,6 +79,7 @@ export function Orders() {
               </TableBody>
             </Table>
           </div>
+          {isLoadingOrders && <OrderTableSkeleton />}
 
           {result && (
             <Pagination

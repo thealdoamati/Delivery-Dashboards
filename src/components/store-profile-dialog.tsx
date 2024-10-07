@@ -30,7 +30,7 @@ const storeProfileSchema = z.object({
 
 type StoreProfileSchema = z.infer<typeof storeProfileSchema>
 
-export function StorieProfileDialog() {
+export function StoreProfileDialog() {
   const queryClient = useQueryClient()
 
   const { data: managedRestaurant } = useQuery({
@@ -38,8 +38,6 @@ export function StorieProfileDialog() {
     queryFn: getManagedRestaurant,
     staleTime: Infinity,
   })
-
-  console.log(managedRestaurant)
 
   const {
     register,
@@ -50,6 +48,20 @@ export function StorieProfileDialog() {
     values: {
       name: managedRestaurant?.name ?? '',
       description: managedRestaurant?.description ?? '',
+    },
+  })
+
+  const { mutateAsync: updateProfileFn } = useMutation({
+    mutationFn: updateProfile,
+    onMutate({ description, name }) {
+      const { cached } = updateManagedRestaurantCache({ description, name })
+
+      return { previousProfile: cached }
+    },
+    onError(_, __, context) {
+      if (context?.previousProfile) {
+        updateManagedRestaurantCache(context.previousProfile)
+      }
     },
   })
 
@@ -75,23 +87,6 @@ export function StorieProfileDialog() {
     return { cached }
   }
 
-  const { mutateAsync: updateProfileFn } = useMutation({
-    mutationFn: updateProfile,
-    onMutate({ name, description }) {
-      const { cached } = updateManagedRestaurantCache({
-        name,
-        description,
-      })
-
-      return { previusProfile: cached }
-    },
-    onError(_, __, context) {
-      if (context?.previusProfile) {
-        updateManagedRestaurantCache(context.previusProfile)
-      }
-    },
-  })
-
   async function handleUpdateProfile(data: StoreProfileSchema) {
     try {
       await updateProfileFn({
@@ -99,9 +94,9 @@ export function StorieProfileDialog() {
         description: data.description,
       })
 
-      toast.success('Perfil atualizado com sucesso"')
+      toast.success('Perfil atualizado com sucesso!')
     } catch {
-      toast.error('Falha ao atualizar perfil, tente novamente!')
+      toast.error('Falha ao atualizar o perfil, tente novamente')
     }
   }
 
@@ -113,6 +108,7 @@ export function StorieProfileDialog() {
           Atualize as informações do seu estabelecimento visíveis ao seu cliente
         </DialogDescription>
       </DialogHeader>
+
       <form onSubmit={handleSubmit(handleUpdateProfile)}>
         <div className="space-y-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
@@ -121,6 +117,7 @@ export function StorieProfileDialog() {
             </Label>
             <Input className="col-span-3" id="name" {...register('name')} />
           </div>
+
           <div className="grid grid-cols-4 items-center gap-4">
             <Label className="text-right" htmlFor="description">
               Descrição
@@ -132,13 +129,14 @@ export function StorieProfileDialog() {
             />
           </div>
         </div>
+
         <DialogFooter>
-          <DialogClose>
+          <DialogClose asChild>
             <Button variant="ghost" type="button">
               Cancelar
             </Button>
           </DialogClose>
-          <Button disabled={isSubmitting} type="submit" variant="success">
+          <Button type="submit" variant="success" disabled={isSubmitting}>
             Salvar
           </Button>
         </DialogFooter>
